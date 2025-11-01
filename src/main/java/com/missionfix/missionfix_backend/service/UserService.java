@@ -1,9 +1,11 @@
 package com.missionfix.missionfix_backend.service;
 
+import com.missionfix.missionfix_backend.dto.RegisterDTO;
 import com.missionfix.missionfix_backend.dto.UserDTO;
 import com.missionfix.missionfix_backend.mapper.UserMapper;
 import com.missionfix.missionfix_backend.model.User;
 import com.missionfix.missionfix_backend.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -24,10 +26,12 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserMapper mapper;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, UserMapper mapper) {
+    public UserService(UserRepository userRepository, UserMapper mapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.mapper = mapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     // 🧩 Récupérer tous les utilisateurs
@@ -45,10 +49,16 @@ public class UserService {
     }
 
     // 🧩 Créer un utilisateur
-    public UserDTO createUser(UserDTO dto) {
-        dto.setBirthday(parseDate(dto.getBirthday().toString()));
-        User user = mapper.toEntity(dto);
+    public UserDTO createUser(RegisterDTO registerDTO) {
+
+        registerDTO.setBirthday(parseDate(registerDTO.getBirthday().toString()));
+
+        registerDTO.setUserPassword(passwordEncoder.encode(registerDTO.getUserPassword()));
+
+        User user = mapper.toEntity(registerDTO);
+
         user = userRepository.save(user);
+
         return mapper.toDto(user);
     }
 }

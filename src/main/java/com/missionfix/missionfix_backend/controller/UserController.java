@@ -1,8 +1,11 @@
 package com.missionfix.missionfix_backend.controller;
 
 
+import com.missionfix.missionfix_backend.dto.RegisterDTO;
 import com.missionfix.missionfix_backend.dto.UserDTO;
 import com.missionfix.missionfix_backend.service.UserService;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +30,13 @@ public class UserController {
     @GetMapping("/{id}")
     public UserDTO getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
+    }
+
+    // POST /register
+    @PostMapping("/register")
+    public ResponseEntity<UserDTO> registerUser(@Valid @RequestBody RegisterDTO registerDTO) {
+        UserDTO createdUser = userService.createUser(registerDTO);
+        return ResponseEntity.ok(createdUser);
     }
 
 
