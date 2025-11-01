@@ -32,14 +32,17 @@ public class User {
     @Column(nullable = false)
     private LocalDate birthday;
     private String role; // // "ARTISAN" ou "ANNONCEUR"
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String profession; // Exemple : "plombier", "menuisier"
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int experienceYears;
 //    private double latitude;
 //    private double longitude;
+@Column(nullable = true)
     private String photo_profil;
+    @Column(nullable = true)
     private String biography;
+    @Column(nullable = false)
     private String address;
 
 }

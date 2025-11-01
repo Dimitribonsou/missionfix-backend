@@ -8,7 +8,7 @@ public class MissionfixBackendApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MissionfixBackendApplication.class, args);
-        System.out.println("🚀 MissionFix backend dimidev is running...");
+        System.out.println("🚀 MissionFix backend Jason-dev is running...");
 	}
 
 }
